@@ -1,28 +1,25 @@
-import { Link, Outlet, useParams } from 'react-router-dom';
+import { Link, Outlet, useParams, useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import API from 'Services/SearchDataApi.js';
 
 const MovieDetails = () => {
   const { id } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const title = searchParams.get('title');
+  console.log(title);
 
+  const base_URL = `https://api.themoviedb.org/3/movie/${id}?language=en-US`;
+  const errorMassage = `Movie ${title} was not found`;
+  console.log(base_URL, id);
   useEffect(() => {
-const options = {
-  method: 'GET',
-  headers: {
-    accept: 'application/json',
-    Authorization:
-      'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2MWQ5Y2Y2YTlkOWIzNThkNTE2MDY4NGE3NWRlMTg0NiIsInN1YiI6IjY1MTBiMmU2M2E0YTEyMDBjNWFhNjAxZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.c4yYt4p0SuZDxRBn3LGch8hpfAZK22HJzxSkBR3CMgk',
-  },
-};
-
-fetch(`https://api.themoviedb.org/3/movie/${id}?language=en-US`, options)
-  .then(response => response.json())
-  .then(response => console.log(response))
-  .catch(err => console.error(err));
-  }, [])
+    API.fetchData(base_URL, errorMassage)
+      .then(response => console.log(response))
+      .catch(err => console.error(err));
+  }, [base_URL, errorMassage]);
 
   return (
     <>
-      <h1>DogDetails: {id}</h1>
+      <h1>DogDetails: {id} {title}</h1>
       <ul>
         <li>
           <Link to="subbreeds">Подподроды</Link>

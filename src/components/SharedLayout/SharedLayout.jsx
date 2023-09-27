@@ -1,13 +1,6 @@
-import { NavLink, Outlet } from 'react-router-dom';
-import styled from 'styled-components';
+import { Outlet } from 'react-router-dom';
+import { NavList, NavItem, StyledLink } from './SharedLayout.styled';
 
-const StyledLink = styled(NavLink)`
-  color: #212121;
-
-  &.active {
-    color: orangered;
-  }
-`;
 
 // localhost:3000/
 //localhost:3000/dogs
@@ -17,14 +10,14 @@ export const SharedLayout = () => {
   return (
     <>
       <header>
-        <ul>
-          <li>
+        <NavList>
+          <NavItem>
             <StyledLink to="/">Home</StyledLink>
-          </li>
-          <li>
+          </NavItem>
+          <NavItem>
             <StyledLink to="/movies">Movies</StyledLink>
-          </li>
-        </ul>
+          </NavItem>
+        </NavList>
       </header>
       <main>
         <Outlet />
