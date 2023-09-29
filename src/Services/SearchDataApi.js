@@ -13,6 +13,7 @@ function fetchData(base_URL, errorMassage) {
       if (response.ok) {
         return response.json();
       }
+      console.log("ERROR")
       return Promise.reject(new Error(errorMassage));
     })
 }

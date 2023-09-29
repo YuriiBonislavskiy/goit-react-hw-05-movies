@@ -6,11 +6,13 @@ import { ReactComponent as IconSearch } from '../../Icons/Search.svg';
 import { nanoid } from 'nanoid';
 import css from './Searchbar.module.css';
 
-export const Searchbar = ({ searchText, onHandleSubmit }) => {
+export const Searchbar = ({ query, onHandleSubmit }) => {
   const initialValues = {
-    searchText: '',
+    searchText: query,
   };
 
+  // const searchText = initialValues.query;
+  // console.log(searchText);
   const schema = yup.object().shape({
     searchText: yup.string().required('Required').trim(),
   });
@@ -35,6 +37,7 @@ export const Searchbar = ({ searchText, onHandleSubmit }) => {
             name="searchText"
             autoComplete="off"
             autoFocus
+            // value={searchText ? searchText : ''}
             placeholder="Search movie by name"
           />
           <button type="submit" className={css.SearchFormButton}>
