@@ -23,7 +23,8 @@ const MovieDetails = () => {
   const [status, setStatus] = useState(Status.IDLE);
   const [error, setError] = useState('');
   const { id } = useParams();
-  const [searchParams, setSearchParams] = useSearchParams();
+  // const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const title = searchParams.get('title');
   // console.log(title);
 
