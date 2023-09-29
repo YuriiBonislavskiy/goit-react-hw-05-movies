@@ -1,7 +1,7 @@
 import { Outlet, useParams, useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import MovieInfo from 'components/MovieInfo';
-import { ListItem, StyledLink, AddInfo } from './MovieDetails.styled';
+import { InfoBox, ListItem, StyledLink, AddInfo } from './MovieDetails.styled';
 import API from 'Services/SearchDataApi.js';
 
 const Status = {
@@ -65,15 +65,17 @@ const MovieDetails = () => {
           poster={poster}
           genres={genres}
         />
-        <AddInfo>Additional information</AddInfo>
-        <ul>
-          <ListItem>
-            <StyledLink to="cast">Cast</StyledLink>
-          </ListItem>
-          <ListItem>
-            <StyledLink to="reviews">Reviews</StyledLink>
-          </ListItem>
-        </ul>
+        <InfoBox>
+          <AddInfo>Additional information</AddInfo>
+          <ul>
+            <ListItem>
+              <StyledLink to="cast">Cast</StyledLink>
+            </ListItem>
+            <ListItem>
+              <StyledLink to="reviews">Reviews</StyledLink>
+            </ListItem>
+          </ul>
+        </InfoBox>
         <Outlet />
       </>
     );

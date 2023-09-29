@@ -4,7 +4,6 @@ import styled from 'styled-components';
 export const MovieInfoContainer = styled.div`
   display: flex;
   padding-bottom: 6px;
-  border-bottom: 4px solid #c9cacc;
 `;
 
 export const MoviePoster = styled.img`

@@ -3,7 +3,6 @@ import styled from 'styled-components';
 export const CastGallery = styled.ul`
   padding: 0;
   padding-top: 20px;
-  border-top: 4px solid #c9cacc;
   display: grid;
   max-width: calc(100vw - 48px);
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
