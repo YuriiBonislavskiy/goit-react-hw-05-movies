@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import MovieListItems from 'components/MovieListItems';
 import API from 'Services/SearchDataApi.js';
 
@@ -9,6 +10,7 @@ const Status = {
   RESOLVED_NO_BUTTON: 'resolved_no-button',
   REJECTED: 'rejected',
 };
+
 const base_URL =
   'https://api.themoviedb.org/3/trending/movie/week?language=en-US';
 const errorMassage = 'Favorite Movies List is empty';
@@ -18,6 +20,9 @@ const FavoriteMovies = () => {
   const [status, setStatus] = useState(Status.IDLE);
   const [error, setError] = useState('');
   const [isFirstLoad, setIsFirstLoad] = useState(true);
+
+  const location = useLocation();
+  // console.log(location.pathname);
 
   useEffect(() => {
     if (isFirstLoad) {
@@ -46,8 +51,10 @@ const FavoriteMovies = () => {
 
   return (
     <>
-      <ul>{<MovieListItems movieList={movieList} />}</ul>
-      {status === 'rejected' && <h1>{error}</h1>} );
+      <ul>
+        {<MovieListItems movieList={movieList} state={{from: location}} />}
+      </ul>
+      {status === 'rejected' && <h1>{error}</h1>}
     </>
   );
 };

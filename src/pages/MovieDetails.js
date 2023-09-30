@@ -1,7 +1,17 @@
-import { Outlet, useParams, useSearchParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import {
+  Outlet,
+  useParams,
+  useSearchParams,
+  useLocation,
+} from 'react-router-dom';
+import { useEffect, useState, useRef } from 'react';
 import MovieInfo from 'components/MovieInfo';
-import { InfoBox, ListItem, StyledLink, AddInfo } from './MovieDetails.styled';
+import {
+  InfoBox,
+  ListItem,
+  StyledLink,
+  AddInfo,
+} from './MovieDetails.styled';
 import API from 'Services/SearchDataApi.js';
 
 const Status = {
@@ -25,8 +35,13 @@ const MovieDetails = () => {
   const { id } = useParams();
   // const [searchParams, setSearchParams] = useSearchParams();
   const [searchParams] = useSearchParams();
-  const title = searchParams.get('title');
-  // console.log(title);
+  const title = searchParams.get('title') ?? '';
+
+  const location = useLocation();
+  const backLincLocation = useRef(location.state?.from ?? '/movies');
+  //  location.state = state;
+  // console.log(location.state);
+  // console.log(backLincLocation);
 
   const base_URL = `https://api.themoviedb.org/3/movie/${id}?language=en-US`;
   const errorMassage = `Movie ${title} was not found`;
@@ -59,17 +74,19 @@ const MovieDetails = () => {
   if (status === 'resolved') {
     return (
       <>
+        {/* <BackLink to={backLincLocation.current ?? '/'}>Go back</BackLink> */}
         <MovieInfo
           movie={movie}
           title={title}
           poster={poster}
           genres={genres}
+          backLincLocation={backLincLocation}
         />
         <InfoBox>
           <AddInfo>Additional information</AddInfo>
           <ul>
             <ListItem>
-              <StyledLink to="cast">Cast</StyledLink>
+              <StyledLink to='cast'>Cast</StyledLink>
             </ListItem>
             <ListItem>
               <StyledLink to="reviews">Reviews</StyledLink>

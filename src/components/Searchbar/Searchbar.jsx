@@ -50,7 +50,7 @@ export const Searchbar = ({ query, onHandleSubmit }) => {
 };
 
 Searchbar.protoType = {
-  searchText: PropTypes.string.isRequired,
+  query: PropTypes.string.isRequired,
   onHandleSubmit: PropTypes.func.isRequired,
 };
 

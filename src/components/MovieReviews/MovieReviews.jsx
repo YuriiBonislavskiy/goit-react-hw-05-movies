@@ -25,15 +25,11 @@ const MovieReviews = () => {
   const [status, setStatus] = useState(Status.IDLE);
   const [error, setError] = useState('');
   const { id } = useParams();
-  // const [searchParams, setSearchParams] = useSearchParams();
   const [searchParams] = useSearchParams();
   const title = searchParams.get('title');
-  // console.log(title);
 
   const base_URL = `https://api.themoviedb.org/3/movie/${id}/reviews?language=en-US&page=1`;
-  console.log(base_URL)
   const errorMassage = `Reviews for movie ${title} was not found`;
-  // console.log(base_URL, id);
 
   useEffect(() => {
     if (isFirstLoad) {
@@ -43,15 +39,9 @@ const MovieReviews = () => {
     API.fetchData(base_URL, errorMassage)
       .then(response => {
         setMovieReviews(response.results);
-        console.log(response.results);
-        // setProfilePath(
-        //   `https://image.tmdb.org/t/p/w500/${response.profile_path}`
-        // );
-        console.log(response.cast);
         setStatus(Status.RESOLVED);
       })
       .catch(err => {
-        // console.log('ERROR');
         setMovieReviews({});
         setError(errorMassage);
         setStatus(Status.REJECTED);

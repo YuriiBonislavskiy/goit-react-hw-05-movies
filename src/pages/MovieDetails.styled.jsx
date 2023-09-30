@@ -6,6 +6,7 @@ export const InfoBox = styled.div`
   border-bottom: 4px solid #c9cacc;
 `;
 
+
 export const AddInfo = styled.h2`
   margin-left: 6px;
   font-size: 16px;
@@ -14,6 +15,8 @@ export const AddInfo = styled.h2`
 export const ListItem = styled.li`
   text-decoration: none;
   margin-right: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 `;
 
 export const StyledLink = styled(Link)`
@@ -25,7 +28,7 @@ export const StyledLink = styled(Link)`
   &.active,
   &:hover,
   &:focus {
-    font-size: 18px;
+    /* font-size: 18px; */
     font-weight: bold;
     text-decoration: underline;
   }

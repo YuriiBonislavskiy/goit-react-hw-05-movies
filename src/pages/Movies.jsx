@@ -1,4 +1,4 @@
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useLocation } from 'react-router-dom';
 import Searchbar from '../components/Searchbar';
 import MovieListItems from 'components/MovieListItems';
 import { useEffect, useState } from 'react';
@@ -18,6 +18,9 @@ const Movies = () => {
   const [error, setError] = useState('');
   const [isFirstLoad, setIsFirstLoad] = useState(true);
   const [searchText, setSearchText] = useSearchParams('query');
+
+  const location = useLocation();
+  // console.log(location);
 
   const query = searchText.get('query') ? searchText.get('query') : '';
   // console.log(query);
@@ -63,7 +66,9 @@ const Movies = () => {
     <>
       <Searchbar query={query} onHandleSubmit={handleSubmit} />
       <ul>
-        {query && <MovieListItems movieList={movieList} />}
+        {query && (
+          <MovieListItems movieList={movieList} state={{from: location}} />
+        )}
         {status === 'rejected' && <h1>{error}</h1>}
       </ul>
     </>
