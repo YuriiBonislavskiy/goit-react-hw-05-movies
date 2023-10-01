@@ -30,7 +30,7 @@ const MovieCast = () => {
     }
     API.fetchData(base_URL, errorMassage)
       .then(response => {
-        if (response.results) {
+        if (response.cast.length === 0) {
           setMovieCast([]);
           setError(errorMassage);
           setStatus(Status.REJECTED);

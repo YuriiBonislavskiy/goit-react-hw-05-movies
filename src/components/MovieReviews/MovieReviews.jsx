@@ -27,7 +27,7 @@ const MovieReviews = () => {
     }
     API.fetchData(base_URL, errorMassage)
       .then(response => {
-        if (response.results) {
+        if (response.results.length === 0) {
           setMovieReviews([]);
           setError(errorMassage);
           setStatus(Status.REJECTED);
