@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 export const BackLink = styled(Link)`
   color: #212121;
-  /* text-decoration: none; */
   margin-top: 50px;
   margin-bottom: 10px;
   margin-left: 10px;
@@ -34,20 +33,3 @@ export const MovieInfoDetail = styled.div`
   padding-left: 20px;
   padding-right: 20px;
 `;
-
-// export const StyledLink = styled(Link)`
-//   color: #212121;
-//   /* text-decoration: none; */
-//   margin-top: 10px;
-//   margin-bottom: 10px;
-//   margin-left: 10px;
-//   font-size: 16px;
-//   color: #0f6cf8;
-
-//   &.active,
-//   &:hover,
-//   &:focus {
-//     font-weight: bold;
-//     text-decoration: underline;
-//   }
-// `;

@@ -1,4 +1,3 @@
-// import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup';
@@ -37,7 +36,6 @@ export const Searchbar = ({ query, onHandleSubmit }) => {
             name="searchText"
             autoComplete="off"
             autoFocus
-            // value={searchText ? searchText : ''}
             placeholder="Search movie by name"
           />
           <button type="submit" className={css.SearchFormButton}>

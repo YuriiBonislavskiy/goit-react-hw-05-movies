@@ -6,9 +6,8 @@ import {
   BackLink,
 } from './MovieInfo.styled';
 
-const MovieInfo = ({ movie, title, poster, genres, backLincLocation }) => {
-//   const location = useLocation();
-//   location.state = backLincLocation;
+const MovieInfo = ({ movie, poster, genres, backLincLocation }) => {
+const {title, name} = movie;
 
   return (
     <>
@@ -20,7 +19,7 @@ const MovieInfo = ({ movie, title, poster, genres, backLincLocation }) => {
         </div>
         <MovieInfoDetail>
           <h1>
-            {title}{' '}
+            {title ? title : name}{' '}
             {movie.release_date ? `(${movie.release_date.slice(0, 4)})` : ''}
           </h1>
           <p>Popularity: {movie.popularity}</p>

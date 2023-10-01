@@ -1,10 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import { PageHeader, NavList, NavItem, StyledLink } from './SharedLayout.styled';
-
-
-// localhost:3000/
-//localhost:3000/dogs
-//localhost:3000/dogs/dog-5
+import { Suspense } from 'react';
+import Loader from 'components/Loader';
 
 export const SharedLayout = () => {
   return (
@@ -20,7 +17,9 @@ export const SharedLayout = () => {
         </NavList>
       </PageHeader>
       <main>
-        <Outlet />
+        <Suspense fallback={<Loader/>}>
+          <Outlet />
+        </Suspense>
       </main>
     </>
   );

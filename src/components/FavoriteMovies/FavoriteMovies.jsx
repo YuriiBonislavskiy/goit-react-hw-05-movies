@@ -22,7 +22,6 @@ const FavoriteMovies = () => {
   const [isFirstLoad, setIsFirstLoad] = useState(true);
 
   const location = useLocation();
-  // console.log(location.pathname);
 
   useEffect(() => {
     if (isFirstLoad) {

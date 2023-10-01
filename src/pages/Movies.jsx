@@ -54,7 +54,6 @@ const Movies = () => {
           setStatus(Status.RESOLVED);
         })
         .catch(error => {
-          // console.log('ERROR');
           setMovieList([]);
           setError(errorMassage);
           setStatus(Status.REJECTED);

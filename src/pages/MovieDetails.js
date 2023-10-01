@@ -4,14 +4,10 @@ import {
   useSearchParams,
   useLocation,
 } from 'react-router-dom';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, Suspense } from 'react';
 import MovieInfo from 'components/MovieInfo';
-import {
-  InfoBox,
-  ListItem,
-  StyledLink,
-  AddInfo,
-} from './MovieDetails.styled';
+import { InfoBox, ListItem, StyledLink, AddInfo } from './MovieDetails.styled';
+import Loader from 'components/Loader';
 import API from 'Services/SearchDataApi.js';
 
 const Status = {
@@ -20,10 +16,6 @@ const Status = {
   RESOLVED: 'resolved',
   REJECTED: 'rejected',
 };
-// const Genres = (genres) => {
-//   const genresNames = genres.map(({ name }) => name).join(", ");
-
-// }
 
 const MovieDetails = () => {
   const [movie, setMovie] = useState({});
@@ -33,19 +25,14 @@ const MovieDetails = () => {
   const [status, setStatus] = useState(Status.IDLE);
   const [error, setError] = useState('');
   const { id } = useParams();
-  // const [searchParams, setSearchParams] = useSearchParams();
   const [searchParams] = useSearchParams();
   const title = searchParams.get('title') ?? '';
 
   const location = useLocation();
   const backLincLocation = useRef(location.state?.from ?? '/movies');
-  //  location.state = state;
-  // console.log(location.state);
-  // console.log(backLincLocation);
 
   const base_URL = `https://api.themoviedb.org/3/movie/${id}?language=en-US`;
   const errorMassage = `Movie ${title} was not found`;
-  // console.log(base_URL, id);
 
   useEffect(() => {
     if (isFirstLoad) {
@@ -55,29 +42,22 @@ const MovieDetails = () => {
     API.fetchData(base_URL, errorMassage)
       .then(response => {
         setMovie(response);
-        // console.log(response);
         setPoster(`https://image.tmdb.org/t/p/w500/${response.poster_path}`);
         setGenres(() => response.genres.map(({ name }) => name).join(', '));
-        // console.log(response);
         setStatus(Status.RESOLVED);
       })
       .catch(err => {
-        // console.log('ERROR');
         setMovie({});
         setError(errorMassage);
         setStatus(Status.REJECTED);
       });
   }, [base_URL, errorMassage, isFirstLoad]);
 
-  // useEffect(() => {console.log(movie)},[])
-
   if (status === 'resolved') {
     return (
       <>
-        {/* <BackLink to={backLincLocation.current ?? '/'}>Go back</BackLink> */}
         <MovieInfo
           movie={movie}
-          title={title}
           poster={poster}
           genres={genres}
           backLincLocation={backLincLocation}
@@ -86,14 +66,16 @@ const MovieDetails = () => {
           <AddInfo>Additional information</AddInfo>
           <ul>
             <ListItem>
-              <StyledLink to='cast'>Cast</StyledLink>
+              <StyledLink to="cast">Cast</StyledLink>
             </ListItem>
             <ListItem>
               <StyledLink to="reviews">Reviews</StyledLink>
             </ListItem>
           </ul>
         </InfoBox>
-        <Outlet />
+        <Suspense fallback={<Loader/>}>
+          <Outlet />
+        </Suspense>
       </>
     );
   }

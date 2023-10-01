@@ -1,6 +1,5 @@
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-// import { ListItem, StyledLink, AddInfo } from './MovieDetails.styled';
 import API from 'Services/SearchDataApi.js';
 import womanImg from './Woman.png';
 import manImg from './Man.png';
@@ -14,25 +13,15 @@ const Status = {
   REJECTED: 'rejected',
 };
 
-// const Genres = (genres) => {
-//   const genresNames = genres.map(({ name }) => name).join(", ");
-
-// }
-
 const MovieCast = () => {
-  const [movieCast, setMovieCast] = useState({});
+  const [movieCast, setMovieCast] = useState([]);
   const [isFirstLoad, setIsFirstLoad] = useState(true);
   const [status, setStatus] = useState(Status.IDLE);
   const [error, setError] = useState('');
   const { id } = useParams();
-//   const [searchParams, setSearchParams] = useSearchParams();
-  const [searchParams] = useSearchParams();
-  const title = searchParams.get('title');
-  // console.log(title);
 
   const base_URL = `https://api.themoviedb.org/3/movie/${id}/credits?language=en-US`;
-  const errorMassage = `Cast for movie ${title} was not found`;
-  // console.log(base_URL, id);
+  const errorMassage = `Cast for movie was not found`;
 
   useEffect(() => {
     if (isFirstLoad) {
@@ -41,23 +30,21 @@ const MovieCast = () => {
     }
     API.fetchData(base_URL, errorMassage)
       .then(response => {
+        if (response.results) {
+          setMovieCast([]);
+          setError(errorMassage);
+          setStatus(Status.REJECTED);
+          return;
+        }
         setMovieCast(response.cast);
-        // console.log(response);
-        // setProfilePath(
-        //   `https://image.tmdb.org/t/p/w500/${response.profile_path}`
-        // );
-        // console.log(response.cast);
         setStatus(Status.RESOLVED);
       })
       .catch(err => {
-        // console.log('ERROR');
-        setMovieCast({});
+        setMovieCast([]);
         setError(errorMassage);
         setStatus(Status.REJECTED);
       });
   }, [base_URL, errorMassage, isFirstLoad]);
-
-  // useEffect(() => {console.log(movie)},[])
 
   if (status === 'resolved') {
     return (
@@ -68,7 +55,6 @@ const MovieCast = () => {
           const srcPath = profile_path
             ? `https://image.tmdb.org/t/p/w500/${profile_path}`
             : genderImg;
-          //   console.log(srcPath);
           return (
             <li key={id}>
               <img alt={name} src={srcPath} width="240px" height="320px" />

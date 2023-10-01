@@ -14,7 +14,6 @@ export const StyledLink = styled(Link)`
   &.active,
   &:hover,
   &:focus {
-    /* font-size: 18px; */
     color: #0f6cf8;
     text-decoration: underline;
   }

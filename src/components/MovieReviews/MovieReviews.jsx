@@ -1,10 +1,6 @@
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-// import { ListItem, StyledLink, AddInfo } from './MovieDetails.styled';
 import API from 'Services/SearchDataApi.js';
-// import womanImg from './Woman.png';
-// import manImg from './Man.png';
-// import undefinedGenderImg from './UndefinedGender.png';
 import { ReviewsGallery } from './MovieReviews.styled';
 
 const Status = {
@@ -14,22 +10,15 @@ const Status = {
   REJECTED: 'rejected',
 };
 
-// const Genres = (genres) => {
-//   const genresNames = genres.map(({ name }) => name).join(", ");
-
-// }
-
 const MovieReviews = () => {
-  const [movieReviews, setMovieReviews] = useState({});
+  const [movieReviews, setMovieReviews] = useState([]);
   const [isFirstLoad, setIsFirstLoad] = useState(true);
   const [status, setStatus] = useState(Status.IDLE);
   const [error, setError] = useState('');
   const { id } = useParams();
-  const [searchParams] = useSearchParams();
-  const title = searchParams.get('title');
 
   const base_URL = `https://api.themoviedb.org/3/movie/${id}/reviews?language=en-US&page=1`;
-  const errorMassage = `Reviews for movie ${title} was not found`;
+  const errorMassage = `Reviews for movie was not found`;
 
   useEffect(() => {
     if (isFirstLoad) {
@@ -38,17 +27,21 @@ const MovieReviews = () => {
     }
     API.fetchData(base_URL, errorMassage)
       .then(response => {
+        if (response.results) {
+          setMovieReviews([]);
+          setError(errorMassage);
+          setStatus(Status.REJECTED);
+          return;
+        }
         setMovieReviews(response.results);
         setStatus(Status.RESOLVED);
       })
       .catch(err => {
-        setMovieReviews({});
+        setMovieReviews([]);
         setError(errorMassage);
         setStatus(Status.REJECTED);
       });
   }, [base_URL, errorMassage, isFirstLoad]);
-
-  // useEffect(() => {console.log(movie)},[])
 
   if (status === 'resolved') {
     return (
@@ -56,7 +49,7 @@ const MovieReviews = () => {
         {movieReviews.map(({ id, author, content }) => {
           return (
             <li key={id}>
-              <h2>Author:  {author}</h2>
+              <h2>Author: {author}</h2>
               <p>{content}</p>
             </li>
           );

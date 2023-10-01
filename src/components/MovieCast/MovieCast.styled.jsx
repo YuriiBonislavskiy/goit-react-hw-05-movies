@@ -12,5 +12,4 @@ export const CastGallery = styled.ul`
   list-style: none;
   margin-left: auto;
   margin-right: auto;
-  /* border-color: rgb(240, 248, 255, 0); */
 `;
